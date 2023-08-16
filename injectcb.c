@@ -139,6 +139,7 @@ void imjectcb_ast_process_file(zend_ast *ast) {
     zend_ast_list *list;
     zend_ast *child;
     zend_string *namespace;
+    zend_string *ast_stmt;
 
     if (ast->kind != ZEND_AST_STMT_LIST) {
         return;
@@ -163,8 +164,9 @@ void imjectcb_ast_process_file(zend_ast *ast) {
                 break;
         }
     }
-
-    php_printf("%s\n", ZSTR_VAL(zend_ast_export("", ast, "")));
+    ast_stmt = zend_ast_export("", ast, "");
+    php_printf("%s\n", ZSTR_VAL(ast_stmt));
+    zend_string_release(ast_stmt);
 }
 
 void imjectcb_ast_process(zend_ast *ast)
